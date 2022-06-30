@@ -12,7 +12,10 @@ namespace Business.Items.Queries.ListItem
     public record ListItemQuery : IRequest<List<Item>>
     {
         public int PageNumber { get; set; } = 1;
+
         public int PageSize { get; set; } = 10;
+
+        public int? CategoryId { get; set; }
     }
 
     public class ListItemQueryHandler : IRequestHandler<ListItemQuery, List<Item>>
@@ -28,6 +31,7 @@ namespace Business.Items.Queries.ListItem
         {
             return await _context.Items
                 .AsNoTracking()
+                .Where(x=> x.Category.Id == request.CategoryId)
                 .Skip(request.PageSize * (request.PageNumber - 1))
                 .ToListAsync(cancellationToken);
         }

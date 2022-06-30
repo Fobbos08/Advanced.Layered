@@ -1,4 +1,6 @@
-﻿namespace Task1.Business
+﻿using LiteDB;
+
+namespace Task1.Business
 {
     public class Item
     {

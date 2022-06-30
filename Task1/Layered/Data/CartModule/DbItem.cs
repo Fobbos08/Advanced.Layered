@@ -1,7 +1,10 @@
-﻿namespace Task1.Data.CartModule
+﻿using LiteDB;
+
+namespace Task1.Data.CartModule
 {
     public class DbItem
     {
+        [BsonId]
         public int Id { get; set; }
 
         public string Name { get; set; }

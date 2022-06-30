@@ -41,7 +41,7 @@ namespace Task1.Data.CartModule
 
         private ILiteCollection<DbCart> GetCartCollection(LiteDatabase db)
         {
-            return db.GetCollection<DbCart>("carts");
+            return db.GetCollection<DbCart>("carts").Include(x=>x.Items);
         }
     }
 }

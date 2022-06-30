@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Business.Common.Exceptions;
 using Business.Common.Interfaces;
@@ -30,6 +31,9 @@ namespace Business.Categories.Commands.DeleteCategory
             {
                 throw new NotFoundException(nameof(Category), request.Id);
             }
+
+            var items = _context.Items.Where(x => x.Category.Id == request.Id);
+            _context.Items.RemoveRange(items);
 
             _context.Categories.Remove(entity);
 

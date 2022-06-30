@@ -7,6 +7,6 @@ namespace Task1.Data.CartModule
     {
         public Guid Id { get; set; }
 
-        public List<DbItem> Items { get; } = new List<DbItem>();
+        public List<DbItem> Items { get; set; } = new List<DbItem>();
     }
 }

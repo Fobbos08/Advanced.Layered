@@ -21,6 +21,7 @@ namespace Infrastructure
             }
             
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<ApplicationDbContextInitializer>();
 
             return services;
         }

@@ -7,12 +7,12 @@ using MediatR;
 
 namespace Business.Items.Commands.DeleteItem
 {
-    public record DeleteCategoryCommand : IRequest
+    public record DeleteItemCommand : IRequest
     {
         public int Id { get; set; }
     }
 
-    public class DeleteItemCommandHandler : IRequestHandler<DeleteCategoryCommand>
+    public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
     {
         private readonly IApplicationDbContext _context;
 
@@ -21,7 +21,7 @@ namespace Business.Items.Commands.DeleteItem
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Items
                 .FindAsync(new object[] { request.Id }, cancellationToken);

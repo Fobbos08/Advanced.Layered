@@ -55,7 +55,7 @@ namespace Task1.Business
             }
         }
 
-        public void RemoveItem(Guid cartIdentifier, Item item)
+        public void RemoveItem(Guid cartIdentifier, int itemId)
         {
             var cart = _cartRepository.GetCart(cartIdentifier);
 
@@ -64,7 +64,7 @@ namespace Task1.Business
                 throw new CartDoesNotExistException();
             }
 
-            var cartItem = cart.Items.SingleOrDefault(x => x.Id == item.Id);
+            var cartItem = cart.Items.SingleOrDefault(x => x.Id == itemId);
 
             if (cartItem == null)
             {
@@ -84,6 +84,12 @@ namespace Task1.Business
         public List<DbItem> GetItems(Guid cartIdentifier)
         {
             var cart = _cartRepository.GetCart(cartIdentifier);
+
+            if (cart == null)
+            {
+                throw new CartDoesNotExistException();
+            }
+
             return cart.Items;
         }
     }
