@@ -5,6 +5,7 @@ using Business.Common.Exceptions;
 using Business.Common.Interfaces;
 using Domain.Entities;
 using MediatR;
+using QueueClient;
 
 namespace Business.Items.Commands.UpdateItem
 {
@@ -28,10 +29,12 @@ namespace Business.Items.Commands.UpdateItem
     public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand>
     {
         private readonly IApplicationDbContext _context;
+        private readonly Client _queueClient;
 
-        public UpdateItemCommandHandler(IApplicationDbContext context)
+        public UpdateItemCommandHandler(IApplicationDbContext context, Client client)
         {
             _context = context;
+            _queueClient = client;
         }
 
         public async Task<Unit> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
@@ -52,6 +55,17 @@ namespace Business.Items.Commands.UpdateItem
             item.Name = request.Name;
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            var updateModel = new UpdateItemModel()
+                {
+                    Id = item.Id,
+                    Description = item.Description,
+                    Image = item.Image,
+                    Name = item.Name,
+                    Price = item.Price
+                };
+
+            _queueClient.TryPublish(QueueNames.ItemQueue, updateModel);
 
             return Unit.Value;
         }

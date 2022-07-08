@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Layered.Business;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Task1.Business;
 using Task1.Data.CartModule;
@@ -11,6 +12,8 @@ namespace Layered
         {
             services.AddTransient<CartService>();
             services.AddTransient<ICartRepository>(x => new CartRepository(dbName));
+
+            services.AddSingleton<MessageHandler>();
 
             return services;
         }

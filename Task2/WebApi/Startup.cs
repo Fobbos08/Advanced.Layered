@@ -14,6 +14,7 @@ using Business;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using QueueClient;
 
 namespace WebApi
 {
@@ -32,6 +33,7 @@ namespace WebApi
             services.AddControllers();
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
+            services.AddClientServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

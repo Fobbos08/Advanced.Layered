@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,6 +10,11 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.25" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.26" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.26" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\QueueClient\QueueClient.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using QueueClient;
 
 namespace Task1.Data.CartModule
 {
@@ -9,5 +10,7 @@ namespace Task1.Data.CartModule
         void UpdateCart(DbCart cart);
 
         DbCart GetCart(Guid cartId);
+
+        void UpdateCarts(UpdateItemModel model);
     }
 }

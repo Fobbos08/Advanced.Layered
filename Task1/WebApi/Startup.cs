@@ -11,7 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Layered;
+using Layered.Business;
 using Microsoft.OpenApi.Models;
+using QueueClient;
 
 namespace WebApi
 {
@@ -28,6 +30,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddClientServices(Configuration);
             services.AddApplicationServices(Configuration.GetValue<string>("DbName"));
 
             services.AddSwaggerGen(c =>
@@ -40,6 +43,12 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var handler = serviceScope.ServiceProvider.GetRequiredService<MessageHandler>();
+                handler.Subscribe();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

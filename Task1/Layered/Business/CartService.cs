@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExpressMapper;
 using ExpressMapper.Extensions;
+using QueueClient;
 using Task1.Business.Exceptions;
 using Task1.Data.CartModule;
 
@@ -91,6 +92,11 @@ namespace Task1.Business
             }
 
             return cart.Items;
+        }
+
+        public void UpdateItems(UpdateItemModel updateModel)
+        {
+            _cartRepository.UpdateCarts(updateModel);
         }
     }
 }

@@ -31,14 +31,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateItem(AddItemCommand command)
+        public async Task<ActionResult> CreateItem([FromBody]AddItemCommand command)
         {
             var id = await Mediator.Send(command);
             return new JsonResult(new { Content = new {ItemId = id } , Links = CreateLinks(id)});
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateItem(UpdateItemCommand command)
+        public async Task<ActionResult> UpdateItem([FromBody]UpdateItemCommand command)
         {
             await Mediator.Send(command);
             return new JsonResult(new { Content = "", Links = "" });
