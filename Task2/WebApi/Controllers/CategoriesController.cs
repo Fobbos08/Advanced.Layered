@@ -7,6 +7,7 @@ using Business.Categories.Commands.UpdateCategory;
 using Business.Categories.Queries.GetCategory;
 using Business.Categories.Queries.ListCategory;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -31,6 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> CreateCategory(AddCategoryCommand command)
         {
             var id = await Mediator.Send(command);
@@ -38,6 +40,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
             await Mediator.Send(command);
@@ -46,6 +49,7 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             await Mediator.Send(new DeleteCategoryCommand(){Id = id});

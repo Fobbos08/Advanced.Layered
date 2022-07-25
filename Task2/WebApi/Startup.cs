@@ -12,7 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QueueClient;
 
@@ -34,6 +36,54 @@ namespace WebApi
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
             services.AddClientServices(Configuration);
+
+            // accepts any access token issued by identity server
+            //services.AddAuthentication("Bearer")
+            //    .AddJwtBearer("Bearer", options =>
+            //    {
+            //        options.Authority = "https://localhost:44344";
+            //        options.Audience = "api1";
+            //        /* options.TokenValidationParameters = new TokenValidationParameters
+            //         {
+            //             ValidateAudience = false
+            //         };*/
+            //    });
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "cookie";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("cookie")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    //options.Authority = "https://localhost:5001";
+                    options.Authority = "https://localhost:44344";
+
+                    options.ClientId = "client2";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code";
+                    options.UsePkce = true;
+                    options.ResponseMode = "query";
+
+                    //options.Scope.Add("api1");
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.Scope.Add("roles");
+                    options.ClaimActions.MapJsonKey("role", "role", "role");
+                    options.TokenValidationParameters.RoleClaimType = "role";
+
+                    options.SaveTokens = true;
+                });
+
+            // adds an authorization policy to make sure the token is for scope 'api1'
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiScope", policy =>
+            //    {
+            //        policy.RequireAuthenticatedUser();
+            //        policy.RequireClaim("scope", "api1");
+            //    });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +110,7 @@ namespace WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

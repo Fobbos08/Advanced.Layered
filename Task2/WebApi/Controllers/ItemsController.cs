@@ -7,6 +7,7 @@ using Business.Items.Commands.UpdateItem;
 using Business.Items.Queries.GetItem;
 using Business.Items.Queries.ListItem;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -18,6 +19,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<List<Item>> GetItems([FromQuery]ListItemQuery query)
         {
+            var role = HttpContext.User;
             var items = await Mediator.Send(query);
             return items;
         }
@@ -31,6 +33,8 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        //[Authorize]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> CreateItem([FromBody]AddItemCommand command)
         {
             var id = await Mediator.Send(command);
@@ -38,6 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> UpdateItem([FromBody]UpdateItemCommand command)
         {
             await Mediator.Send(command);
@@ -46,6 +51,7 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult> DeleteItem(int id)
         {
             await Mediator.Send(new DeleteItemCommand(){Id = id});
