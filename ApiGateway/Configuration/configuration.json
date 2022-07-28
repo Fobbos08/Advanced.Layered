@@ -1,0 +1,71 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44384
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44390
+        }
+      ],
+      "UpstreamPathTemplate": "/catalog/api/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "Priority": 0
+    },
+    {
+      "DownstreamPathTemplate": "/api/items/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44390
+        }
+      ],
+      "UpstreamPathTemplate": "/catalog/api/items/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Priority": 1,
+      "Key": "item"
+    },
+    {
+      "DownstreamPathTemplate": "/api/items/parameters/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44390
+        }
+      ],
+      "UpstreamPathTemplate": "/catalog/api/items/parameters/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Priority": 1,
+      "Key": "itemProperties"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "item",
+        "itemProperties"
+      ],
+      "UpstreamPathTemplate": "/items/itemfulldata/{id}"
+    }
+  ],
+  "GlobalConfiguration": {
+    /*"RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration",*/
+    "BaseUrl": "https://localhost:5000"
+  }
+}

@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public ActionResult GetCart(string cartKey)
         {
-            if(Guid.TryParse(cartKey, out Guid guid))
+            if (Guid.TryParse(cartKey, out Guid guid))
             {
                 try
                 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Business.Items.Commands.AddItem;
 using Business.Items.Commands.DeleteItem;
@@ -9,6 +10,7 @@ using Business.Items.Queries.ListItem;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
+using KeyValuePair = WebApi.Models.KeyValuePair;
 
 namespace WebApi.Controllers
 {
@@ -19,7 +21,6 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<List<Item>> GetItems([FromQuery]ListItemQuery query)
         {
-            var role = HttpContext.User;
             var items = await Mediator.Send(query);
             return items;
         }
@@ -30,6 +31,24 @@ namespace WebApi.Controllers
         {
             var item = await Mediator.Send(new GetItemQuery(){ Id = id });
             return new JsonResult(new { Content = item, Links = CreateLinks(id) });
+        }
+
+        [HttpGet]
+        [Route("parameters/{id:int}")]
+        public async Task<ActionResult> GetItemParameters(int id)
+        {
+            var item = await Mediator.Send(new GetItemQuery() { Id = id });
+
+            if (item == null) return new JsonResult(new { Content = item, Links = CreateLinks(id) });
+            
+            var pairs = new List<KeyValuePair>
+            {
+                new KeyValuePair() { Key = nameof(item.Name), Value = item.Name },
+                new KeyValuePair() { Key = nameof(item.Description), Value = item.Description },
+                new KeyValuePair() {Key = nameof(item.Price), Value = item.Price.ToString(CultureInfo.InvariantCulture) }
+            };
+
+            return new JsonResult(pairs);
         }
 
         [HttpPost]
