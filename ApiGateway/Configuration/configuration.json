@@ -10,7 +10,14 @@
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "admin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{version}/{everything}",
@@ -35,7 +42,14 @@
       ],
       "UpstreamPathTemplate": "/catalog/api/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
-      "Priority": 0
+      "Priority": 0,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "admin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -48,7 +62,14 @@
       ],
       "UpstreamPathTemplate": "/catalog/api/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
-      "Priority": 0
+      "Priority": 0,
+      "AuthenticationOptions": {//just for easy demonstration
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "admin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/items/{id}",

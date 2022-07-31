@@ -30,7 +30,9 @@ namespace MvcClient.Controllers
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var content = await client.GetStringAsync("https://localhost:44390/api/categories");
+            
+            //var content = await client.GetStringAsync("https://localhost:44390/api/categories");
+            var content = await client.GetStringAsync("http://localhost:5005/catalog/api/items");
 
             ViewBag.Json = JArray.Parse(content).ToString();
             return View("json");

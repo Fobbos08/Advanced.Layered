@@ -4,11 +4,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -32,6 +35,20 @@ namespace ApiGateway
                         .AddEnvironmentVariables();
                 })
                 .ConfigureServices(s => {
+                    JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+                    s.AddAuthentication("Bearer")
+                        .AddJwtBearer("Bearer", options =>
+                        {
+                            options.Authority = "https://localhost:5001";
+
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateAudience = false,
+                                RoleClaimType = "role"
+                            };
+                        });
+
                     s.AddOcelot();
                 })
                 .ConfigureLogging((hostingContext, logging) =>

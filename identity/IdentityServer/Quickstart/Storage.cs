@@ -40,6 +40,11 @@ namespace IdentityServer.Quickstart
             {
                 Name = "manager",
                 Permissions = AccessRights.Create | AccessRights.Delete | AccessRights.Read | AccessRights.Update
+            },
+            new Role()
+            {
+                Name = "admin",
+                Permissions = AccessRights.Create | AccessRights.Delete | AccessRights.Read | AccessRights.Update
             }
         };
 
@@ -50,6 +55,12 @@ namespace IdentityServer.Quickstart
                 Name = "user1",
                 Password = "pass",
                 RoleName = "manager"
+            },
+            new User()
+            {
+                Name = "admin",
+                Password = "admin",
+                RoleName = "admin"
             }
         };
 
@@ -61,6 +72,13 @@ namespace IdentityServer.Quickstart
                 Password = Users[0].Password,
                 Username = Users[0].Name,
                 Claims = { new Claim(JwtClaimTypes.Role, Users[0].RoleName) }
+            },
+            new TestUser()
+            {
+                SubjectId = Users[1].Name + "id",
+                Password = Users[1].Password,
+                Username = Users[1].Name,
+                Claims = { new Claim(JwtClaimTypes.Role, Users[1].RoleName) }
             }
         };
     }

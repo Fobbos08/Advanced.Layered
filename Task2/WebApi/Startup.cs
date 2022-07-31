@@ -38,75 +38,18 @@ namespace WebApi
             services.AddInfrastructureServices(Configuration);
             services.AddClientServices(Configuration);
 
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "https://localhost:5001";
-
-                    //options..Scope.Add("roles");
-                    //options.ClaimActions.MapUniqueJsonKey("roles", "role");
-
-                    //options.SecurityTokenValidators = new List<ISecurityTokenValidator>()
-                    //{
-                    //    new JwtSecurityTokenHandler()
-                    //    {
-                    //        MapInboundClaims = true
-                    //    }
-                    //};
-                    
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = false,
-                        RoleClaimType = "role"
-                    };
-                });
-
-            // adds an authorization policy to make sure the token is for scope 'api1'
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("ApiScope", policy =>
-            //    {
-            //        policy.RequireAuthenticatedUser();
-            //        policy.RequireClaim("scope", "api1");
-            //    });
-            //});
-
-
-
-
-
-
-
-            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
-            //services.AddAuthentication(options =>
-            //    {
-            //        options.DefaultScheme = "Cookies";
-            //        options.DefaultChallengeScheme = "oidc";
-            //    })
-            //    .AddCookie("Cookies")
-            //    .AddOpenIdConnect("oidc", options =>
+            //services.AddAuthentication("Bearer")
+            //    .AddJwtBearer("Bearer", options =>
             //    {
             //        options.Authority = "https://localhost:5001";
-            //        //options.Authority = "https://localhost:44344";
 
-            //        options.ClientId = "client2";
-            //        options.ClientSecret = "secret";
-            //        options.ResponseType = "code";
-
-            //        //options.ResponseMode = "query";
-
-            //        //options.Scope.Add("api1");
-            //        //options.GetClaimsFromUserInfoEndpoint = true; !!!!!!!!!!!!!!!!
-            //        options.Scope.Add("api1");
-            //        //options.Scope.Add("roles");
-            //        //options.ClaimActions.MapJsonKey("role", "role", "role");
-            //        //options.TokenValidationParameters.RoleClaimType = "role";
-
-            //        options.SaveTokens = true;
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateAudience = false,
+            //            RoleClaimType = "role"
+            //        };
             //    });
         }
 
