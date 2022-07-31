@@ -37,7 +37,7 @@ namespace WebApi
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
             services.AddClientServices(Configuration);
-
+            services.AddSwaggerGen();
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             //services.AddAuthentication("Bearer")
@@ -73,6 +73,8 @@ namespace WebApi
                 //}
             }
 
+            app.UseSwagger();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -84,6 +86,8 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwaggerUI();
         }
     }
 }

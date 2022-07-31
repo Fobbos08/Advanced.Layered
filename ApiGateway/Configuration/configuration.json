@@ -17,7 +17,8 @@
       },
       "RouteClaimsRequirement": {
         "role": "admin"
-      }
+      },
+      "SwaggerKey": "cart"
     },
     {
       "DownstreamPathTemplate": "/api/{version}/{everything}",
@@ -29,7 +30,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      },
+      "SwaggerKey": "cart"
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -49,7 +54,8 @@
       },
       "RouteClaimsRequirement": {
         "role": "admin"
-      }
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -63,13 +69,17 @@
       "UpstreamPathTemplate": "/catalog/api/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "Priority": 0,
-      "AuthenticationOptions": {//just for easy demonstration
+      "AuthenticationOptions": { //just for easy demonstration
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
         "role": "admin"
-      }
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "DownstreamPathTemplate": "/api/items/{id}",
@@ -83,7 +93,8 @@
       "UpstreamPathTemplate": "/catalog/api/items/{id}",
       "UpstreamHttpMethod": [ "GET" ],
       "Priority": 1,
-      "Key": "item"
+      "Key": "item",
+      "SwaggerKey": "catalog"
     },
     {
       "DownstreamPathTemplate": "/api/items/parameters/{id}",
@@ -97,7 +108,8 @@
       "UpstreamPathTemplate": "/catalog/api/items/parameters/{id}",
       "UpstreamHttpMethod": [ "GET" ],
       "Priority": 1,
-      "Key": "itemProperties"
+      "Key": "itemProperties",
+      "SwaggerKey": "catalog"
     }
   ],
   "Aggregates": [
@@ -106,7 +118,35 @@
         "item",
         "itemProperties"
       ],
-      "UpstreamPathTemplate": "/items/itemfulldata/{id}"
+      "UpstreamPathTemplate": "/items/itemfulldata/{id}",
+      "Description": "Custom description for this aggregate route."
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "catalog",
+      "Config": [
+        {
+          "Name": "catalog API",
+          "Version": "v1",
+          "Url": "https://localhost:44390/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "cart",
+      "Config": [
+        {
+          "Name": "cart API",
+          "Version": "v1",
+          "Url": "https://localhost:44384/swagger/v1/swagger.json"
+        },
+        {
+          "Name": "cart2 API",
+          "Version": "v2",
+          "Url": "https://localhost:44384/swagger/v2/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
