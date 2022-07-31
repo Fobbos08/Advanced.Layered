@@ -17,9 +17,11 @@ namespace WebApi.Controllers
     public class CategoriesController : BaseApiController
     {
         [HttpGet]
+        [Authorize(Roles = "manager")]//just for easy demonstration
+        //[Authorize]
         public async Task<List<Category>> GetCategories([FromQuery]ListCategoryQuery query)
-        {
-            var categories = await Mediator.Send(query);
+       {
+           var categories = await Mediator.Send(query);
             return categories;
         }
 

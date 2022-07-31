@@ -10,7 +10,19 @@
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44384
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -22,7 +34,20 @@
         }
       ],
       "UpstreamPathTemplate": "/catalog/api/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "UpstreamHttpMethod": [ "POST", "PUT", "DELETE" ],
+      "Priority": 0
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44390
+        }
+      ],
+      "UpstreamPathTemplate": "/catalog/api/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
       "Priority": 0
     },
     {

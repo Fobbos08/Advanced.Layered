@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
@@ -37,42 +38,30 @@ namespace WebApi
             services.AddInfrastructureServices(Configuration);
             services.AddClientServices(Configuration);
 
-            // accepts any access token issued by identity server
-            //services.AddAuthentication("Bearer")
-            //    .AddJwtBearer("Bearer", options =>
-            //    {
-            //        options.Authority = "https://localhost:44344";
-            //        options.Audience = "api1";
-            //        /* options.TokenValidationParameters = new TokenValidationParameters
-            //         {
-            //             ValidateAudience = false
-            //         };*/
-            //    });
 
-            services.AddAuthentication(options =>
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
                 {
-                    options.DefaultScheme = "cookie";
-                    options.DefaultChallengeScheme = "oidc";
-                })
-                .AddCookie("cookie")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    //options.Authority = "https://localhost:5001";
-                    options.Authority = "https://localhost:44344";
+                    options.Authority = "https://localhost:5001";
 
-                    options.ClientId = "client2";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
-                    options.UsePkce = true;
-                    options.ResponseMode = "query";
+                    //options..Scope.Add("roles");
+                    //options.ClaimActions.MapUniqueJsonKey("roles", "role");
 
-                    //options.Scope.Add("api1");
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.Scope.Add("roles");
-                    options.ClaimActions.MapJsonKey("role", "role", "role");
-                    options.TokenValidationParameters.RoleClaimType = "role";
-
-                    options.SaveTokens = true;
+                    //options.SecurityTokenValidators = new List<ISecurityTokenValidator>()
+                    //{
+                    //    new JwtSecurityTokenHandler()
+                    //    {
+                    //        MapInboundClaims = true
+                    //    }
+                    //};
+                    
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        RoleClaimType = "role"
+                    };
                 });
 
             // adds an authorization policy to make sure the token is for scope 'api1'
@@ -84,6 +73,41 @@ namespace WebApi
             //        policy.RequireClaim("scope", "api1");
             //    });
             //});
+
+
+
+
+
+
+
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultScheme = "Cookies";
+            //        options.DefaultChallengeScheme = "oidc";
+            //    })
+            //    .AddCookie("Cookies")
+            //    .AddOpenIdConnect("oidc", options =>
+            //    {
+            //        options.Authority = "https://localhost:5001";
+            //        //options.Authority = "https://localhost:44344";
+
+            //        options.ClientId = "client2";
+            //        options.ClientSecret = "secret";
+            //        options.ResponseType = "code";
+
+            //        //options.ResponseMode = "query";
+
+            //        //options.Scope.Add("api1");
+            //        //options.GetClaimsFromUserInfoEndpoint = true; !!!!!!!!!!!!!!!!
+            //        options.Scope.Add("api1");
+            //        //options.Scope.Add("roles");
+            //        //options.ClaimActions.MapJsonKey("role", "role", "role");
+            //        //options.TokenValidationParameters.RoleClaimType = "role";
+
+            //        options.SaveTokens = true;
+            //    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
