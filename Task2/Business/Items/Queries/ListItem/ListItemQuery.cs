@@ -31,8 +31,9 @@ namespace Business.Items.Queries.ListItem
         {
             return await _context.Items
                 .AsNoTracking()
-                .Where(x=> x.Category.Id == request.CategoryId)
+                .Where(x=> request.CategoryId == null || x.Category.Id == request.CategoryId)
                 .Skip(request.PageSize * (request.PageNumber - 1))
+                .Include(x => x.Category)
                 .ToListAsync(cancellationToken);
         }
     }

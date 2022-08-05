@@ -27,11 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "Task2\WebApi\WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueClient", "..\QueueClient\QueueClient.csproj", "{38E6DF91-C7EA-4535-AB52-D8EC00D5DF6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{70AED29E-3EDF-4042-A1FD-8F2A8708C874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{70AED29E-3EDF-4042-A1FD-8F2A8708C874}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "identity\IdentityServer\IdentityServer.csproj", "{66B1ACC1-B8FC-494C-9123-2E5470B77634}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "MvcClient\MvcClient.csproj", "{F24A6A93-2E6F-4436-8266-2E06B08AB8D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQLApi", "Task2\GraphQLApi\GraphQLApi.csproj", "{63780086-7A7A-48C5-9F1E-315A47F01D46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{F24A6A93-2E6F-4436-8266-2E06B08AB8D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F24A6A93-2E6F-4436-8266-2E06B08AB8D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F24A6A93-2E6F-4436-8266-2E06B08AB8D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63780086-7A7A-48C5-9F1E-315A47F01D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63780086-7A7A-48C5-9F1E-315A47F01D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63780086-7A7A-48C5-9F1E-315A47F01D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63780086-7A7A-48C5-9F1E-315A47F01D46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{AAEB1113-7DB2-47B4-9C63-E56766DD76BA} = {D83EF90B-F536-48D2-A25A-770630A48B5D}
 		{BD4AD34A-215C-4C23-851D-42150762754D} = {D83EF90B-F536-48D2-A25A-770630A48B5D}
 		{31B1E17D-23A6-4855-9BBB-0BBBB3BE56B6} = {356056B6-0945-44DF-B79A-3AD1318B6421}
+		{63780086-7A7A-48C5-9F1E-315A47F01D46} = {356056B6-0945-44DF-B79A-3AD1318B6421}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4301939-0F50-4C9A-B853-4243EE7D0AD8}

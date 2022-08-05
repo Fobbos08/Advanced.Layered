@@ -61,7 +61,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "manager")]
+        //[Authorize(Roles = "manager")]
         public async Task<ActionResult> UpdateItem([FromBody]UpdateItemCommand command)
         {
             await Mediator.Send(command);
