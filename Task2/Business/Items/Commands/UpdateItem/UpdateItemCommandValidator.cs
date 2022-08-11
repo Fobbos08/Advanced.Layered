@@ -4,7 +4,7 @@ namespace Business.Items.Commands.UpdateItem
 {
     public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
     {
-        public UpdateItemCommandValidator()
+        public UpdateItemCommandValidator ()
         {
             RuleFor(x => x.Id)
                 .GreaterThanOrEqualTo(0);

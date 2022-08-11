@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+
 using IdentityModel;
+
 using IdentityServer4.Test;
 
 namespace IdentityServer.Quickstart

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using IdentityModel;
+
 using IdentityServer.Quickstart;
+
 using IdentityServer4.Test;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer
@@ -18,7 +22,7 @@ namespace IdentityServer
 
         [HttpPost]
         [Route("adduser")]
-        public ActionResult AddUser(string name, string password)
+        public ActionResult AddUser (string name, string password)
         {
             Storage.Users.Add(new User() { Name = name, Password = password });
             Storage.TestUsers.Clear();
@@ -33,7 +37,7 @@ namespace IdentityServer
 
         [HttpPost]
         [Route("addrole")]
-        public ActionResult AddRole(string name)
+        public ActionResult AddRole (string name)
         {
             Storage.Roles.Add(new Role() { Name = name });
             return Ok();
@@ -41,7 +45,7 @@ namespace IdentityServer
 
         [HttpPost]
         [Route("setpermissions")]
-        public ActionResult SetRolePermissions(string name, AccessRights permissions)
+        public ActionResult SetRolePermissions (string name, AccessRights permissions)
         {
             var item = Storage.Roles.FirstOrDefault(x => x.Name.Equals(name));
 
@@ -54,7 +58,7 @@ namespace IdentityServer
 
         [HttpPost]
         [Route("setroletouser")]
-        public ActionResult SetRoleToUser(string userName, string roleName)
+        public ActionResult SetRoleToUser (string userName, string roleName)
         {
             var user = Storage.Users.FirstOrDefault(x => x.Name.Equals(userName));
 
@@ -68,7 +72,7 @@ namespace IdentityServer
                 SubjectId = x.Name + "id",
                 Password = x.Password,
                 Username = x.Name,
-                Claims = x.RoleName == null ? new List<Claim>() : new List<Claim>(){ new Claim(JwtClaimTypes.Role, x.RoleName) }
+                Claims = x.RoleName == null ? new List<Claim>() : new List<Claim>() { new Claim(JwtClaimTypes.Role, x.RoleName) }
             }));
 
             return Ok();

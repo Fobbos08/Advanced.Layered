@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,11 +5,17 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -22,7 +24,7 @@ namespace ApiGateway
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main (string[] args)
         {
             var builder = new WebHostBuilder();
             IConfiguration conf = null;
@@ -41,7 +43,8 @@ namespace ApiGateway
 
                     conf = config.Build();
                 })
-                .ConfigureServices(s => {
+                .ConfigureServices(s =>
+                {
                     JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
                     s.AddMvcCore()

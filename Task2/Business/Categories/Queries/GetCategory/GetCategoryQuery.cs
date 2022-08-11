@@ -1,9 +1,13 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Categories.Queries.GetCategory
@@ -17,12 +21,12 @@ namespace Business.Categories.Queries.GetCategory
     {
         private readonly IApplicationDbContext _context;
 
-        public GetItemQueryHandler(IApplicationDbContext context)
+        public GetItemQueryHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Category> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<Category> Handle (GetCategoryQuery request, CancellationToken cancellationToken)
         {
             return await _context.Categories
                 .Where(x => x.Id == request.Id)

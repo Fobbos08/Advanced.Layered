@@ -4,7 +4,7 @@ namespace Business.Categories.Commands.UpdateCategory
 {
     public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
-        public UpdateCategoryCommandValidator()
+        public UpdateCategoryCommandValidator ()
         {
             RuleFor(x => x.Id)
                 .GreaterThanOrEqualTo(0);

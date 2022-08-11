@@ -15,7 +15,7 @@ namespace GraphQLApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main (string[] args)
         {
             var builder = new WebHostBuilder();
             IConfiguration conf = null;

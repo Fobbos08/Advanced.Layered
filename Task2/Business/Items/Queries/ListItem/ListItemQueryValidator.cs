@@ -4,7 +4,7 @@ namespace Business.Items.Queries.ListItem
 {
     public class ListItemQueryValidator : AbstractValidator<ListItemQuery>
     {
-        public ListItemQueryValidator()
+        public ListItemQueryValidator ()
         {
             RuleFor(x => x.PageNumber)
                 .GreaterThanOrEqualTo(1);

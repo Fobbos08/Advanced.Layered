@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MvcClient.Models;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+using MvcClient.Models;
+
 using Newtonsoft.Json.Linq;
 
 namespace MvcClient.Controllers
@@ -14,23 +17,23 @@ namespace MvcClient.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController (ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index ()
         {
             return View();
         }
-        
-        public async Task<IActionResult> CallApi()
+
+        public async Task<IActionResult> CallApi ()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            
+
             //var content = await client.GetStringAsync("https://localhost:44390/api/categories");
             var content = await client.GetStringAsync("http://localhost:5005/catalog/api/items");
 
@@ -38,13 +41,13 @@ namespace MvcClient.Controllers
             return View("json");
         }
 
-        public IActionResult Logout()
+        public IActionResult Logout ()
         {
             return SignOut("Cookies", "oidc");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error ()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }

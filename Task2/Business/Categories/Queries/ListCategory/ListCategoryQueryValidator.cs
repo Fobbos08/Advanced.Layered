@@ -4,7 +4,7 @@ namespace Business.Categories.Queries.ListCategory
 {
     public class ListCategoryQueryValidator : AbstractValidator<ListCategoryQuery>
     {
-        public ListCategoryQueryValidator()
+        public ListCategoryQueryValidator ()
         {
             RuleFor(x => x.PageNumber)
                 .GreaterThanOrEqualTo(1);

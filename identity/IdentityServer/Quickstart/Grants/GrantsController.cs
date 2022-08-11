@@ -2,15 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4.Services;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
+using IdentityServer4.Services;
+using IdentityServer4.Stores;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -26,7 +28,7 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IResourceStore _resources;
         private readonly IEventService _events;
 
-        public GrantsController(IIdentityServerInteractionService interaction,
+        public GrantsController (IIdentityServerInteractionService interaction,
             IClientStore clients,
             IResourceStore resources,
             IEventService events)
@@ -41,7 +43,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// Show list of grants
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index ()
         {
             return View("Index", await BuildViewModelAsync());
         }
@@ -51,7 +53,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Revoke(string clientId)
+        public async Task<IActionResult> Revoke (string clientId)
         {
             await _interaction.RevokeUserConsentAsync(clientId);
             await _events.RaiseAsync(new GrantsRevokedEvent(User.GetSubjectId(), clientId));
@@ -59,12 +61,12 @@ namespace IdentityServerHost.Quickstart.UI
             return RedirectToAction("Index");
         }
 
-        private async Task<GrantsViewModel> BuildViewModelAsync()
+        private async Task<GrantsViewModel> BuildViewModelAsync ()
         {
             var grants = await _interaction.GetAllUserGrantsAsync();
 
             var list = new List<GrantViewModel>();
-            foreach(var grant in grants)
+            foreach (var grant in grants)
             {
                 var client = await _clients.FindClientByIdAsync(grant.ClientId);
                 if (client != null)

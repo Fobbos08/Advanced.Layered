@@ -2,9 +2,13 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Items.Queries.ListItem
@@ -22,16 +26,16 @@ namespace Business.Items.Queries.ListItem
     {
         private readonly IApplicationDbContext _context;
 
-        public ListItemQueryHandler(IApplicationDbContext context)
+        public ListItemQueryHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<Item>> Handle(ListItemQuery request, CancellationToken cancellationToken)
+        public async Task<List<Item>> Handle (ListItemQuery request, CancellationToken cancellationToken)
         {
             return await _context.Items
                 .AsNoTracking()
-                .Where(x=> request.CategoryId == null || x.Category.Id == request.CategoryId)
+                .Where(x => request.CategoryId == null || x.Category.Id == request.CategoryId)
                 .Skip(request.PageSize * (request.PageNumber - 1))
                 .Include(x => x.Category)
                 .ToListAsync(cancellationToken);

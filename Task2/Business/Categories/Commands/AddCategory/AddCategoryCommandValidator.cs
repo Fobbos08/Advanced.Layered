@@ -4,7 +4,7 @@ namespace Business.Categories.Commands.AddCategory
 {
     public class AddCategoryCommandValidator : AbstractValidator<AddCategoryCommand>
     {
-        public AddCategoryCommandValidator()
+        public AddCategoryCommandValidator ()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()

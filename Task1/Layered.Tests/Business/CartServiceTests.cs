@@ -1,7 +1,11 @@
 ﻿using System;
+
 using ExpressMapper.Extensions;
+
 using NSubstitute;
+
 using NUnit.Framework;
+
 using Task1.Business;
 using Task1.Data.CartModule;
 
@@ -13,14 +17,14 @@ namespace Task1.Tests.Business
         private ICartRepository _cartRepository;
 
         [SetUp]
-        public void Setup()
+        public void Setup ()
         {
             _cartRepository = Substitute.For<ICartRepository>();
             _cartService = new CartService(_cartRepository);
         }
 
         [Test]
-        public void AddItem_CreateCart()
+        public void AddItem_CreateCart ()
         {
             DbCart actual = null;
             _cartRepository.CreateCart(Arg.Do<DbCart>(x => actual = x));
@@ -51,7 +55,7 @@ namespace Task1.Tests.Business
         }
 
         [Test]
-        public void AddItem_UpdateCart_NewItem()
+        public void AddItem_UpdateCart_NewItem ()
         {
             var cartGuid = new Guid(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
@@ -101,7 +105,7 @@ namespace Task1.Tests.Business
         }
 
         [Test]
-        public void AddItem_UpdateCart_ExistItem()
+        public void AddItem_UpdateCart_ExistItem ()
         {
             var cartGuid = new Guid(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
@@ -141,7 +145,7 @@ namespace Task1.Tests.Business
             AssertCart(expectedCart, actual);
         }
 
-        private void AssertCart(DbCart expected, DbCart actual)
+        private void AssertCart (DbCart expected, DbCart actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Items.Count, expected.Items.Count);

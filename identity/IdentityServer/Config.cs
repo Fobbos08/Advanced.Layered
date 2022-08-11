@@ -2,10 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4;
-using IdentityServer4.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
+
+using IdentityServer4;
+using IdentityServer4.Models;
 
 namespace IdentityServer
 {
@@ -25,7 +26,7 @@ namespace IdentityServer
                 new ApiScope("api1", "My API")
             };
 
-        public static IEnumerable<ApiResource> GetApiResources()
+        public static IEnumerable<ApiResource> GetApiResources ()
         {
             return new List<ApiResource>
             {

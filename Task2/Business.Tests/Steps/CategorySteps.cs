@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Business.Categories.Commands.AddCategory;
 using Business.Tests.Steps;
+
 using Domain.Entities;
+
 using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
+
 using NUnit.Framework;
+
 using TechTalk.SpecFlow;
 
 namespace Business.Integration.Tests.Steps
@@ -17,12 +23,12 @@ namespace Business.Integration.Tests.Steps
         private readonly List<Category> _categories = new List<Category>();
         private readonly List<Exception> _exceptions = new List<Exception>();
 
-        public CategorySteps(ScenarioContext context) : base(context)
+        public CategorySteps (ScenarioContext context) : base(context)
         {
         }
 
         [BeforeScenario]
-        public void CleanDatabase()
+        public void CleanDatabase ()
         {
             _categories.Clear();
             _exceptions.Clear();
@@ -30,7 +36,7 @@ namespace Business.Integration.Tests.Steps
         }
 
         [Given(@"the Category Name: (\w+)")]
-        public void GivenCategoryIs(string name)
+        public void GivenCategoryIs (string name)
         {
             var category = new Category()
             {
@@ -40,7 +46,7 @@ namespace Business.Integration.Tests.Steps
         }
 
         [Given(@"the Category Name: (\w+) ImageUrl:(.*)")]
-        public void GivenCategoryIs(string name, string url)
+        public void GivenCategoryIs (string name, string url)
         {
             var category = new Category()
             {
@@ -51,7 +57,7 @@ namespace Business.Integration.Tests.Steps
         }
 
         [When(@"defined categories added")]
-        public async void WhenDefinedCategoriesAdded()
+        public async void WhenDefinedCategoriesAdded ()
         {
             foreach (var category in _categories)
             {
@@ -73,19 +79,19 @@ namespace Business.Integration.Tests.Steps
         }
 
         [Then(@"should exist (.*) validation errors")]
-        public void ThenExistValidationError(int count)
+        public void ThenExistValidationError (int count)
         {
             Assert.AreEqual(_exceptions.Count, count);
         }
 
         [Then(@"should exist (.*) categories")]
-        public void ThenTheResultShouldBe(int count)
+        public void ThenTheResultShouldBe (int count)
         {
             Assert.AreEqual(count, _dbContext.Categories.Count());
         }
 
         [Then(@"first category Name is (.*)")]
-        public void ThenFirstCategoryNameIs(string name)
+        public void ThenFirstCategoryNameIs (string name)
         {
             var category = _dbContext.Categories.First();
             Assert.AreEqual(name, category.Name);

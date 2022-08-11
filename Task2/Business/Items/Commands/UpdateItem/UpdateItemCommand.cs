@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Exceptions;
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
+
 using QueueClient;
 
 namespace Business.Items.Commands.UpdateItem
@@ -31,13 +35,13 @@ namespace Business.Items.Commands.UpdateItem
         private readonly IApplicationDbContext _context;
         private readonly Client _queueClient;
 
-        public UpdateItemCommandHandler(IApplicationDbContext context, Client client)
+        public UpdateItemCommandHandler (IApplicationDbContext context, Client client)
         {
             _context = context;
             _queueClient = client;
         }
 
-        public async Task<Unit> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (UpdateItemCommand request, CancellationToken cancellationToken)
         {
             var item = await _context.Items
                 .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -57,13 +61,13 @@ namespace Business.Items.Commands.UpdateItem
             await _context.SaveChangesAsync(cancellationToken);
 
             var updateModel = new UpdateItemModel()
-                {
-                    Id = item.Id,
-                    Description = item.Description,
-                    Image = item.Image,
-                    Name = item.Name,
-                    Price = item.Price
-                };
+            {
+                Id = item.Id,
+                Description = item.Description,
+                Image = item.Image,
+                Name = item.Name,
+                Price = item.Price
+            };
 
             _queueClient.TryPublish(QueueNames.ItemQueue, updateModel);
 

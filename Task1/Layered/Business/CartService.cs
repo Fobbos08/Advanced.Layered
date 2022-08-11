@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using ExpressMapper;
 using ExpressMapper.Extensions;
+
 using QueueClient;
+
 using Task1.Business.Exceptions;
 using Task1.Data.CartModule;
 
@@ -13,13 +16,13 @@ namespace Task1.Business
     {
         private readonly ICartRepository _cartRepository;
 
-        public CartService(ICartRepository cartRepository)
+        public CartService (ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
             Mapper.Register<Item, DbItem>();
         }
 
-        public void AddItem(Guid cartIdentifier, Item item)
+        public void AddItem (Guid cartIdentifier, Item item)
         {
             var cart = _cartRepository.GetCart(cartIdentifier);
 
@@ -56,7 +59,7 @@ namespace Task1.Business
             }
         }
 
-        public void RemoveItem(Guid cartIdentifier, int itemId)
+        public void RemoveItem (Guid cartIdentifier, int itemId)
         {
             var cart = _cartRepository.GetCart(cartIdentifier);
 
@@ -82,7 +85,7 @@ namespace Task1.Business
             _cartRepository.UpdateCart(cart);
         }
 
-        public List<DbItem> GetItems(Guid cartIdentifier)
+        public List<DbItem> GetItems (Guid cartIdentifier)
         {
             var cart = _cartRepository.GetCart(cartIdentifier);
 
@@ -94,7 +97,7 @@ namespace Task1.Business
             return cart.Items;
         }
 
-        public void UpdateItems(UpdateItemModel updateModel)
+        public void UpdateItems (UpdateItemModel updateModel)
         {
             _cartRepository.UpdateCarts(updateModel);
         }

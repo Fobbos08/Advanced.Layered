@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Exceptions;
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
 
 namespace Business.Categories.Commands.UpdateCategory
@@ -23,12 +26,12 @@ namespace Business.Categories.Commands.UpdateCategory
     {
         private readonly IApplicationDbContext _context;
 
-        public UpdateItemCommandHandler(IApplicationDbContext context)
+        public UpdateItemCommandHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = await _context.Categories
                 .FindAsync(new object[] { request.Id }, cancellationToken);

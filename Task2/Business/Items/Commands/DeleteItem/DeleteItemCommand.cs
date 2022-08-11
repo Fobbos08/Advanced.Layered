@@ -1,8 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Exceptions;
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
 
 namespace Business.Items.Commands.DeleteItem
@@ -16,12 +19,12 @@ namespace Business.Items.Commands.DeleteItem
     {
         private readonly IApplicationDbContext _context;
 
-        public DeleteItemCommandHandler(IApplicationDbContext context)
+        public DeleteItemCommandHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (DeleteItemCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Items
                 .FindAsync(new object[] { request.Id }, cancellationToken);

@@ -1,16 +1,18 @@
 ﻿using System;
+
 using LiteDB;
+
 using QueueClient;
 
 namespace Task1.Data.CartModule
 {
     public class CartRepository : DbProvider, ICartRepository
     {
-        public CartRepository(string databaseName) : base(databaseName)
+        public CartRepository (string databaseName) : base(databaseName)
         {
         }
 
-        public void CreateCart(DbCart cart)
+        public void CreateCart (DbCart cart)
         {
             Execute(database =>
             {
@@ -19,7 +21,7 @@ namespace Task1.Data.CartModule
             });
         }
 
-        public void UpdateCart(DbCart cart)
+        public void UpdateCart (DbCart cart)
         {
             Execute(database =>
             {
@@ -28,7 +30,7 @@ namespace Task1.Data.CartModule
             });
         }
 
-        public void UpdateCarts(UpdateItemModel model)
+        public void UpdateCarts (UpdateItemModel model)
         {
             Execute(database =>
             {
@@ -55,7 +57,7 @@ namespace Task1.Data.CartModule
             });
         }
 
-        public DbCart GetCart(Guid cartId)
+        public DbCart GetCart (Guid cartId)
         {
             DbCart cart = null;
             Execute(database =>
@@ -67,9 +69,9 @@ namespace Task1.Data.CartModule
             return cart;
         }
 
-        private ILiteCollection<DbCart> GetCartCollection(LiteDatabase db)
+        private ILiteCollection<DbCart> GetCartCollection (LiteDatabase db)
         {
-            return db.GetCollection<DbCart>("carts").Include(x=>x.Items);
+            return db.GetCollection<DbCart>("carts").Include(x => x.Items);
         }
     }
 }

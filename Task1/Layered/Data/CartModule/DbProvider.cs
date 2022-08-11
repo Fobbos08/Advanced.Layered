@@ -1,4 +1,5 @@
 ﻿using System;
+
 using LiteDB;
 
 namespace Task1.Data.CartModule
@@ -7,12 +8,12 @@ namespace Task1.Data.CartModule
     {
         private readonly string dbName;
 
-        public DbProvider(string databaseName)
+        public DbProvider (string databaseName)
         {
             dbName = databaseName;
         }
 
-        public void Execute(Action<LiteDatabase> action)
+        public void Execute (Action<LiteDatabase> action)
         {
             using (var db = new LiteDatabase(dbName))
             {

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
 
 namespace Business.Items.Commands.AddItem
@@ -24,12 +27,12 @@ namespace Business.Items.Commands.AddItem
     {
         private readonly IApplicationDbContext _context;
 
-        public AddItemCommandHandler(IApplicationDbContext context)
+        public AddItemCommandHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> Handle(AddItemCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle (AddItemCommand request, CancellationToken cancellationToken)
         {
             var entity = new Item()
             {

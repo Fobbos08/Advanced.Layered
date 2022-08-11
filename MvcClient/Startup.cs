@@ -1,15 +1,16 @@
+using System.IdentityModel.Tokens.Jwt;
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication;
 
 namespace MvcClient
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices (IServiceCollection services)
         {
             services.AddControllersWithViews();
 
@@ -28,7 +29,7 @@ namespace MvcClient
                 options.ClientId = "client2";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
-                
+
                 //options.Scope.Add("api1");
 
                 options.Scope.Add("roles");
@@ -39,7 +40,7 @@ namespace MvcClient
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure (IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

@@ -2,9 +2,13 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Categories.Queries.ListCategory
@@ -19,12 +23,12 @@ namespace Business.Categories.Queries.ListCategory
     {
         private readonly IApplicationDbContext _context;
 
-        public ListItemQueryHandler(IApplicationDbContext context)
+        public ListItemQueryHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<Category>> Handle(ListCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<List<Category>> Handle (ListCategoryQuery request, CancellationToken cancellationToken)
         {
             return await _context.Categories
                 .AsNoTracking()

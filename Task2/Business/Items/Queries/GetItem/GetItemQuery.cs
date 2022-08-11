@@ -1,9 +1,13 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Items.Queries.GetItem
@@ -17,12 +21,12 @@ namespace Business.Items.Queries.GetItem
     {
         private readonly IApplicationDbContext _context;
 
-        public GetItemQueryHandler(IApplicationDbContext context)
+        public GetItemQueryHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Item> Handle(GetItemQuery request, CancellationToken cancellationToken)
+        public async Task<Item> Handle (GetItemQuery request, CancellationToken cancellationToken)
         {
             return await _context.Items
                 .Where(x => x.Id == request.Id)

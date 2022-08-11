@@ -1,8 +1,12 @@
 ﻿using Business.Common.Interfaces;
+
 using Infrastructure;
+
 using MediatR;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using TechTalk.SpecFlow;
 
 namespace Business.Tests.Steps
@@ -13,7 +17,7 @@ namespace Business.Tests.Steps
 
         protected readonly IApplicationDbContext _dbContext;
 
-        protected BaseSteps(ScenarioContext context)
+        protected BaseSteps (ScenarioContext context)
         {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appSettings.json");

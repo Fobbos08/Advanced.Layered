@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Interfaces;
+
 using MediatR;
 
 namespace Business.Categories.Commands.AddCategory
@@ -19,12 +21,12 @@ namespace Business.Categories.Commands.AddCategory
     {
         private readonly IApplicationDbContext _context;
 
-        public AddCategoryCommandHandler(IApplicationDbContext context)
+        public AddCategoryCommandHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle (AddCategoryCommand request, CancellationToken cancellationToken)
         {
             var entity = new Domain.Entities.Category()
             {

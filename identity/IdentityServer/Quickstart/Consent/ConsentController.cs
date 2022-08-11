@@ -2,18 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using IdentityServer4.Events;
+using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Extensions;
+using IdentityServer4.Validation;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.Validation;
-using System.Collections.Generic;
-using System;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -28,7 +30,7 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IEventService _events;
         private readonly ILogger<ConsentController> _logger;
 
-        public ConsentController(
+        public ConsentController (
             IIdentityServerInteractionService interaction,
             IEventService events,
             ILogger<ConsentController> logger)
@@ -44,7 +46,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// <param name="returnUrl"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index(string returnUrl)
+        public async Task<IActionResult> Index (string returnUrl)
         {
             var vm = await BuildViewModelAsync(returnUrl);
             if (vm != null)
@@ -60,7 +62,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(ConsentInputModel model)
+        public async Task<IActionResult> Index (ConsentInputModel model)
         {
             var result = await ProcessConsent(model);
 
@@ -93,7 +95,7 @@ namespace IdentityServerHost.Quickstart.UI
         /*****************************************/
         /* helper APIs for the ConsentController */
         /*****************************************/
-        private async Task<ProcessConsentResult> ProcessConsent(ConsentInputModel model)
+        private async Task<ProcessConsentResult> ProcessConsent (ConsentInputModel model)
         {
             var result = new ProcessConsentResult();
 
@@ -161,7 +163,7 @@ namespace IdentityServerHost.Quickstart.UI
             return result;
         }
 
-        private async Task<ConsentViewModel> BuildViewModelAsync(string returnUrl, ConsentInputModel model = null)
+        private async Task<ConsentViewModel> BuildViewModelAsync (string returnUrl, ConsentInputModel model = null)
         {
             var request = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (request != null)
@@ -176,7 +178,7 @@ namespace IdentityServerHost.Quickstart.UI
             return null;
         }
 
-        private ConsentViewModel CreateConsentViewModel(
+        private ConsentViewModel CreateConsentViewModel (
             ConsentInputModel model, string returnUrl,
             AuthorizationRequest request)
         {
@@ -197,7 +199,7 @@ namespace IdentityServerHost.Quickstart.UI
             vm.IdentityScopes = request.ValidatedResources.Resources.IdentityResources.Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
 
             var apiScopes = new List<ScopeViewModel>();
-            foreach(var parsedScope in request.ValidatedResources.ParsedScopes)
+            foreach (var parsedScope in request.ValidatedResources.ParsedScopes)
             {
                 var apiScope = request.ValidatedResources.Resources.FindApiScope(parsedScope.ParsedName);
                 if (apiScope != null)
@@ -215,7 +217,7 @@ namespace IdentityServerHost.Quickstart.UI
             return vm;
         }
 
-        private ScopeViewModel CreateScopeViewModel(IdentityResource identity, bool check)
+        private ScopeViewModel CreateScopeViewModel (IdentityResource identity, bool check)
         {
             return new ScopeViewModel
             {
@@ -228,7 +230,7 @@ namespace IdentityServerHost.Quickstart.UI
             };
         }
 
-        public ScopeViewModel CreateScopeViewModel(ParsedScopeValue parsedScopeValue, ApiScope apiScope, bool check)
+        public ScopeViewModel CreateScopeViewModel (ParsedScopeValue parsedScopeValue, ApiScope apiScope, bool check)
         {
             var displayName = apiScope.DisplayName ?? apiScope.Name;
             if (!String.IsNullOrWhiteSpace(parsedScopeValue.ParsedParameter))
@@ -247,7 +249,7 @@ namespace IdentityServerHost.Quickstart.UI
             };
         }
 
-        private ScopeViewModel GetOfflineAccessScope(bool check)
+        private ScopeViewModel GetOfflineAccessScope (bool check)
         {
             return new ScopeViewModel
             {

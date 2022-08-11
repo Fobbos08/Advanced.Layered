@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
@@ -8,12 +9,12 @@ namespace Infrastructure
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicationDbContextInitializer(ApplicationDbContext context)
+        public ApplicationDbContextInitializer (ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task InitialiseAsync()
+        public async Task InitialiseAsync ()
         {
             if (_context.Database.IsSqlServer())
             {

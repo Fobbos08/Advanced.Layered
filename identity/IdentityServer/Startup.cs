@@ -3,9 +3,12 @@
 
 
 using IdentityServer.Quickstart;
+
 using IdentityServer4;
 using IdentityServer4.Services;
+
 using IdentityServerHost.Quickstart.UI;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,14 +19,14 @@ namespace IdentityServer
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices (IServiceCollection services)
         {
             services.AddControllersWithViews();
             services.AddControllers();
 
             var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-               // .AddInMemoryApiScopes(Config.ApiScopes)
+                // .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.Clients)
                 .AddTestUsers(Storage.TestUsers);
@@ -55,7 +58,7 @@ namespace IdentityServer
             //services.AddTransient<IProfileService, ProfileService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure (IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

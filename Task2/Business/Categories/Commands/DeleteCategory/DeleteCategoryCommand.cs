@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Business.Common.Exceptions;
 using Business.Common.Interfaces;
+
 using Domain.Entities;
+
 using MediatR;
 
 namespace Business.Categories.Commands.DeleteCategory
@@ -17,12 +20,12 @@ namespace Business.Categories.Commands.DeleteCategory
     {
         private readonly IApplicationDbContext _context;
 
-        public DeleteItemCommandHandler(IApplicationDbContext context)
+        public DeleteItemCommandHandler (IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Categories
                 .FindAsync(new object[] { request.Id }, cancellationToken);

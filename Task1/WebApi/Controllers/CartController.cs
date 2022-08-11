@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
 using Task1.Business;
 using Task1.Business.Exceptions;
 
@@ -16,13 +18,13 @@ namespace WebApi.Controllers
     {
         private CartService _service;
 
-        public CartController(CartService service)
+        public CartController (CartService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public ActionResult GetCart(string cartKey)
+        public ActionResult GetCart (string cartKey)
         {
             if (Guid.TryParse(cartKey, out Guid guid))
             {
@@ -41,7 +43,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddItem([FromQuery]string cartKey, [FromBody]Item item)
+        public ActionResult AddItem ([FromQuery] string cartKey, [FromBody] Item item)
         {
             if (Guid.TryParse(cartKey, out Guid guid))
             {
@@ -53,7 +55,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        public ActionResult DeleteItem(string cartKey, int itemId)
+        public ActionResult DeleteItem (string cartKey, int itemId)
         {
             if (!Guid.TryParse(cartKey, out Guid guid)) return BadRequest();
 

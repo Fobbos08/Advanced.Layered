@@ -4,7 +4,7 @@ namespace Business.Items.Commands.AddItem
 {
     public class AddItemCommandValidator : AbstractValidator<AddItemCommand>
     {
-        public AddItemCommandValidator()
+        public AddItemCommandValidator ()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()

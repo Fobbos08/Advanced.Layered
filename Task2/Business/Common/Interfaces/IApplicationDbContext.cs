@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+
 using Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Common.Interfaces
@@ -11,6 +13,6 @@ namespace Business.Common.Interfaces
 
         DbSet<Item> Items { get; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync (CancellationToken cancellationToken);
     }
 }
