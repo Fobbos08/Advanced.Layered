@@ -1,10 +1,14 @@
+using System.IO;
+
+using Business;
+
+using Infrastructure;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using Business;
-using Infrastructure;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+
 using QueueClient;
 
 namespace GraphQLApi

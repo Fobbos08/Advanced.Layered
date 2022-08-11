@@ -1,0 +1,58 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+# All files
+[*]
+indent_style = space
+
+insert_final_newline=true
+csharp_space_between_method_declaration_name_and_open_parenthesis=true
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# Xml files
+[*.xml]
+indent_size = 2
+
+
+[*.cs]
+# class, record, struct must be named in Pascal Case
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+dotnet_naming_rule.class_name_in_pascal_case.severity = error
+dotnet_naming_rule.class_name_in_pascal_case.style = pascal_case
+dotnet_naming_rule.class_name_in_pascal_case.symbols = class_recod_struct_names
+
+dotnet_naming_symbols.class_recod_struct_names.applicable_kinds = class,record,struct
+
+# interface must be named in Pascal Case with I symbol
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+
+dotnet_naming_rule.interface_name_in_pascal_case.severity = error
+dotnet_naming_rule.interface_name_in_pascal_case.style = interface_style
+dotnet_naming_rule.interface_name_in_pascal_case.symbols = interface_names
+
+dotnet_naming_symbols.interface_names.applicable_kinds = interface
+
+# interface must be named in Pascal Case with I symbol
+dotnet_naming_style.public_member_style.capitalization = pascal_case
+
+dotnet_naming_rule.interface_name_in_pascal_case.severity = error
+dotnet_naming_rule.interface_name_in_pascal_case.style = public_member_style
+dotnet_naming_rule.interface_name_in_pascal_case.symbols = public_members
+
+dotnet_naming_symbols.public_members.applicable_kinds = method
+dotnet_naming_symbols.public_members.applicable_accessibilities = public
+
+# public methods must be named in Pascal Case
+dotnet_naming_style.enum_style.capitalization = pascal_case
+
+dotnet_naming_rule.enum_in_pascal_case.severity = error
+dotnet_naming_rule.enum_in_pascal_case.style = enum_style
+dotnet_naming_rule.enum_in_pascal_case.symbols = enum_parameters
+
+dotnet_naming_symbols.enum_parameters.applicable_kinds = type_parameter
+
+
+
+
