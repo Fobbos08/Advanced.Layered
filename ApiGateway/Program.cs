@@ -67,7 +67,6 @@ namespace ApiGateway
 
                     s.AddSwaggerForOcelot(conf, (o) =>
                     {
-                        //o.GenerateDocsForAggregates = true;
                         o.GenerateDocsForGatewayItSelf = true;
                     });
                     s.AddSwaggerGen();
@@ -82,7 +81,6 @@ namespace ApiGateway
                     app.UseRouting();
                     app.UseSwagger();
 
-                    //app.UseSwaggerUI();
                     app.UseSwaggerForOcelotUI(opt =>
                     {
                         opt.PathToSwaggerGenerator = "/swagger/docs";

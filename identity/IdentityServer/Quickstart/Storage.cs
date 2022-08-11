@@ -36,7 +36,7 @@ namespace IdentityServer.Quickstart
 
     public static class Storage
     {
-        public static List<Role> Roles = new List<Role>()
+        public static readonly List<Role> Roles = new List<Role>()
         {
             new Role()
             {
@@ -50,7 +50,7 @@ namespace IdentityServer.Quickstart
             }
         };
 
-        public static List<User> Users = new List<User>()
+        public static readonly List<User> Users = new List<User>()
         {
             new User()
             {
@@ -66,7 +66,7 @@ namespace IdentityServer.Quickstart
             }
         };
 
-        public static List<TestUser> TestUsers = new List<TestUser>()
+        public static readonly List<TestUser> TestUsers = new List<TestUser>()
         {
             new TestUser()
             {

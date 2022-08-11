@@ -30,8 +30,6 @@ namespace MvcClient
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
 
-                //options.Scope.Add("api1");
-
                 options.Scope.Add("roles");
                 options.ClaimActions.MapJsonKey("role", "role");
                 options.TokenValidationParameters.RoleClaimType = "role";

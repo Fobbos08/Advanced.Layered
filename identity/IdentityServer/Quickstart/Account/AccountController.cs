@@ -103,77 +103,84 @@ namespace IdentityServerHost.Quickstart.UI
 
                     return Redirect(model.ReturnUrl);
                 }
-                else
-                {
-                    // since we don't have a valid context, then we just go back to the home page
-                    return Redirect("~/");
-                }
+
+                // since we don't have a valid context, then we just go back to the home page
+                return Redirect("~/");
             }
 
-            if (ModelState.IsValid)
+            var vm = await BuildLoginViewModelAsync(model);
+            if (!ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
-                {
-                    var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.Client.ClientId));
-
-                    // only set explicit expiration here if user chooses "remember me". 
-                    // otherwise we rely upon expiration configured in cookie middleware.
-                    AuthenticationProperties props = null;
-                    if (AccountOptions.AllowRememberLogin && model.RememberLogin)
-                    {
-                        props = new AuthenticationProperties
-                        {
-                            IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
-                        };
-                    };
-
-                    // issue authentication cookie with subject ID and username
-                    var isuser = new IdentityServerUser(user.SubjectId)
-                    {
-                        DisplayName = user.Username
-                    };
-
-                    await HttpContext.SignInAsync(isuser, props);
-
-                    if (context != null)
-                    {
-                        if (context.IsNativeClient())
-                        {
-                            // The client is native, so this change in how to
-                            // return the response is for better UX for the end user.
-                            return this.LoadingPage("Redirect", model.ReturnUrl);
-                        }
-
-                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return Redirect(model.ReturnUrl);
-                    }
-
-                    // request for a local page
-                    if (Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else if (string.IsNullOrEmpty(model.ReturnUrl))
-                    {
-                        return Redirect("~/");
-                    }
-                    else
-                    {
-                        // user might have clicked on a malicious link - should be logged
-                        throw new Exception("invalid return URL");
-                    }
-                }
-
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
-                ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
+                return View(vm);
             }
+
+            // validate username/password against in-memory store
+            if (_users.ValidateCredentials(model.Username, model.Password))
+            {
+                return await ProcessLogin(model, context);
+            }
+
+            await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+            ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
+
 
             // something went wrong, show form with error
-            var vm = await BuildLoginViewModelAsync(model);
+            vm = await BuildLoginViewModelAsync(model);
             return View(vm);
+        }
+
+        private async Task<IActionResult> ProcessLogin (LoginInputModel model, AuthorizationRequest context)
+        {
+            var user = _users.FindByUsername(model.Username);
+            await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username,
+                clientId: context?.Client.ClientId));
+
+            // only set explicit expiration here if user chooses "remember me". 
+            // otherwise we rely upon expiration configured in cookie middleware.
+            AuthenticationProperties props = null;
+            if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+            {
+                props = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                };
+            }
+
+            // issue authentication cookie with subject ID and username
+            var isuser = new IdentityServerUser(user.SubjectId)
+            {
+                DisplayName = user.Username
+            };
+
+            await HttpContext.SignInAsync(isuser, props);
+
+            if (context != null)
+            {
+                if (context.IsNativeClient())
+                {
+                    // The client is native, so this change in how to
+                    // return the response is for better UX for the end user.
+                    return this.LoadingPage("Redirect", model.ReturnUrl);
+                }
+
+                // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                return Redirect(model.ReturnUrl);
+            }
+
+            // request for a local page
+            if (Url.IsLocalUrl(model.ReturnUrl))
+            {
+                return Redirect(model.ReturnUrl);
+            }
+
+            if (string.IsNullOrEmpty(model.ReturnUrl))
+            {
+                return Redirect("~/");
+            }
+
+            // user might have clicked on a malicious link - should be logged
+            throw new Exception("invalid return URL");
         }
 
 

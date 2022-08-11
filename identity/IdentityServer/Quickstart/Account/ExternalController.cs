@@ -26,13 +26,11 @@ namespace IdentityServerHost.Quickstart.UI
     {
         private readonly TestUserStore _users;
         private readonly IIdentityServerInteractionService _interaction;
-        private readonly IClientStore _clientStore;
         private readonly ILogger<ExternalController> _logger;
         private readonly IEventService _events;
 
         public ExternalController (
             IIdentityServerInteractionService interaction,
-            IClientStore clientStore,
             IEventService events,
             ILogger<ExternalController> logger,
             TestUserStore users = null)
@@ -42,7 +40,6 @@ namespace IdentityServerHost.Quickstart.UI
             _users = users ?? new TestUserStore(TestUsers.Users);
 
             _interaction = interaction;
-            _clientStore = clientStore;
             _logger = logger;
             _events = events;
         }

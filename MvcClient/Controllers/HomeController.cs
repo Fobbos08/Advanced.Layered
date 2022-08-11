@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using MvcClient.Models;
 
@@ -15,13 +14,6 @@ namespace MvcClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController (ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index ()
         {
             return View();
@@ -34,7 +26,6 @@ namespace MvcClient.Controllers
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            //var content = await client.GetStringAsync("https://localhost:44390/api/categories");
             var content = await client.GetStringAsync("http://localhost:5005/catalog/api/items");
 
             ViewBag.Json = JArray.Parse(content).ToString();
